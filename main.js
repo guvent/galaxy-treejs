@@ -14,7 +14,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { Galaxy } from './objects/galaxy.js';
 
-let canvas, renderer, camera, scene, orbit, baseComposer, bloomComposer, overlayComposer
+let canvas, renderer, camera, scene, orbit, baseComposer, bloomComposer, overlayComposer, texture
 
 let cameraX = 200;
 let cameraY = 200;
@@ -27,7 +27,11 @@ function initThree() {
 
     // scene
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xEBE2DB, 0.00003);
+    // scene.fog = new THREE.FogExp2(0xEBE2DB, 0.00003);
+
+
+    texture = new THREE.TextureLoader().load('resources/cosmos.jpg');
+    scene.background = texture;
 
     // camera
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 5000000);
@@ -45,7 +49,6 @@ function initThree() {
     // orbit.maxPolarAngle = (Math.PI / 2) - (Math.PI / 360)
 
     initRenderPipeline()
-
 }
 
 const info = (v) => document.getElementById("info").innerText = v;
@@ -142,8 +145,6 @@ function initRenderPipeline() {
         resetCamera()
     });
 
-
-
     const i1 = setInterval(() => { animate(1) }, 30);
     // const i2 = setInterval(() => { animate(1) }, 10);
     const i3 = setInterval(() => { animate(0.2) }, 10);
@@ -155,6 +156,8 @@ function initRenderPipeline() {
     setTimeout(() => clearInterval(i3), 2000);
     setTimeout(() => clearInterval(i4), 30000);
     setTimeout(() => clearInterval(i4), 300000);
+
+    window.i = texture;
 }
 
 
@@ -171,6 +174,10 @@ const animate = (acc) => {
     // cZ = cZ + acc * 0.01;
 
     camera.position.set(cX, cY, cZ);
+
+    texture.repeat.x = texture.repeat.x - (texture.repeat.x * 0.00005)
+    texture.repeat.y = texture.repeat.y - (texture.repeat.y * 0.00005)
+
 
     info(JSON.stringify({
         position: camera.position, up: camera.up, look: camera
@@ -191,6 +198,8 @@ function resizeRendererToDisplaySize(renderer) {
 
 function resetCamera() {
     camera.position.set(cameraX, cameraY, cameraZ);
+    texture.repeat.x = 1;
+    texture.repeat.y = 1;
 }
 
 async function render() {
