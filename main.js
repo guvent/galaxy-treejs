@@ -48,6 +48,8 @@ function initThree() {
 
 }
 
+const info = (v) => document.getElementById("info").innerText = v;
+
 function initRenderPipeline() {
 
     // Assign Renderer
@@ -102,7 +104,7 @@ function initRenderPipeline() {
     baseComposer.addPass(renderScene)
     baseComposer.addPass(finalPass)
 
-    const info = (v) => document.getElementById("info").innerText = v;
+
 
 
 
@@ -176,7 +178,7 @@ const animate = (acc) => {
 
     info(JSON.stringify({
         position: camera.position, up: camera.up, look: camera
-    }, null, 2))
+    }, null, 2));
 
 }
 
