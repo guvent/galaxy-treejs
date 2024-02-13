@@ -104,10 +104,6 @@ function initRenderPipeline() {
     baseComposer.addPass(renderScene)
     baseComposer.addPass(finalPass)
 
-
-
-
-
     info(JSON.stringify({
         cameraX, cameraY, cameraZ
     }, null, 2))
