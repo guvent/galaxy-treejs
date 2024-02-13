@@ -117,40 +117,6 @@ function initRenderPipeline() {
         const kDown = ev.key === "ArrowDown";
 
         if (!kLeft && !kRight && !kUp && !kDown) return;
-
-
-        // a = kLeft ? a - 10 : a + 10
-
-        const animate = (acc) => {
-            let cX = camera.position.x;
-            let cY = camera.position.y;
-            let cZ = camera.position.z;
-
-            if (cX < -120 || cY < -120) return;
-
-            cX = cX < 100 ? cX - acc * 0.1 : cX - acc;
-            cY = cY < 100 ? cY - acc * 0.1 : cY - acc;
-            // cZ = cZ + acc * 0.01;
-
-            camera.position.set(cX, cY, cZ);
-
-            info(JSON.stringify({
-                position: camera.position, up: camera.up, look: camera
-            }, null, 2))
-
-        }
-
-        const i1 = setInterval(() => { animate(1) }, 30);
-        // const i2 = setInterval(() => { animate(1) }, 10);
-        const i3 = setInterval(() => { animate(0.2) }, 10);
-        const i4 = setInterval(() => { animate(0.4) }, 20);
-        const i5 = setInterval(() => { animate(0.4) }, 20);
-
-        setTimeout(() => clearInterval(i1), 500);
-        // setTimeout(() => clearInterval(i2), 3000);
-        setTimeout(() => clearInterval(i3), 2000);
-        setTimeout(() => clearInterval(i4), 30000);
-        setTimeout(() => clearInterval(i4), 300000);
     });
 
     document.addEventListener("mousemove", function (ev) {
@@ -176,7 +142,42 @@ function initRenderPipeline() {
 
     document.addEventListener("click", () => {
         resetCamera()
-    })
+    });
+
+
+
+    const i1 = setInterval(() => { animate(1) }, 30);
+    // const i2 = setInterval(() => { animate(1) }, 10);
+    const i3 = setInterval(() => { animate(0.2) }, 10);
+    const i4 = setInterval(() => { animate(0.4) }, 20);
+    const i5 = setInterval(() => { animate(0.4) }, 20);
+
+    setTimeout(() => clearInterval(i1), 500);
+    // setTimeout(() => clearInterval(i2), 3000);
+    setTimeout(() => clearInterval(i3), 2000);
+    setTimeout(() => clearInterval(i4), 30000);
+    setTimeout(() => clearInterval(i4), 300000);
+}
+
+
+
+const animate = (acc) => {
+    let cX = camera.position.x;
+    let cY = camera.position.y;
+    let cZ = camera.position.z;
+
+    if (cX < -120 || cY < -120) return;
+
+    cX = cX < 100 ? cX - acc * 0.1 : cX - acc;
+    cY = cY < 100 ? cY - acc * 0.1 : cY - acc;
+    // cZ = cZ + acc * 0.01;
+
+    camera.position.set(cX, cY, cZ);
+
+    info(JSON.stringify({
+        position: camera.position, up: camera.up, look: camera
+    }, null, 2))
+
 }
 
 function resizeRendererToDisplaySize(renderer) {
@@ -245,4 +246,4 @@ initThree()
 
 let galaxy = new Galaxy(scene)
 
-requestAnimationFrame(render)
+requestAnimationFrame(render);
